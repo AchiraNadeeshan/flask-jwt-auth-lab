@@ -13,7 +13,7 @@ This lab project implements a basic authentication system using:
 
 The goal is to allow user registration, login, and access to a protected page using token-based authentication.
 
----
+
 
 ## 📁 Project Structure
 
@@ -29,7 +29,7 @@ auth_lab/
 └── venv/                 # (Optional) Python virtual environment
 ```
 
----
+
 
 ## 🚀 Getting Started
 
@@ -59,7 +59,7 @@ venv\Scripts\activate
 pip install Flask PyJWT
 ```
 
----
+
 
 ## 🛠️ Features & Tasks Completed
 
@@ -92,7 +92,7 @@ pip install Flask PyJWT
 - Try access without cookies or using incognito mode
 - Confirm database persistence
 
----
+
 
 ## 🧪 Running the App
 
@@ -104,7 +104,7 @@ python app.py
 
 If port `3000` is busy, edit `app.py` to use port `3001`.
 
----
+
 
 ## 🔐 JWT Behavior
 
@@ -113,7 +113,7 @@ If port `3000` is busy, edit `app.py` to use port `3001`.
 - Protected routes use a `@token_required` decorator
 - Invalid or expired tokens redirect to login
 
----
+
 
 ## 🗃️ Database Notes
 
@@ -121,7 +121,7 @@ If port `3000` is busy, edit `app.py` to use port `3001`.
 - Stores: `username` (primary key), `password` (hashed via SHA256)
 - File: `users.db`
 
----
+
 
 ## ✅ Commit Convention
 
@@ -134,7 +134,7 @@ fix: handle duplicate username error during signup
 chore: add requirements.txt for package dependencies
 ```
 
----
+
 
 ## 📄 License
 
