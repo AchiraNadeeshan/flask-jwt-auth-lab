@@ -109,3 +109,8 @@ def login():
             return render_template('login.html')
     return render_template('login.html')
 
+
+@app.route('/protected')
+@token_required
+def protected():
+    return render_template('protected.html', username=request.username)
