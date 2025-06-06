@@ -84,3 +84,28 @@ def register():
     return render_template('register.html')
 
 
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+
+        hashed_password = hashlib.sha256(password.encode()).hexdigest()
+
+        conn = sqlite3.connect('users.db')
+        cursor = conn.cursor()
+        cursor.execute('SELECT * FROM users WHERE username = ? AND password = ?', (username, hashed_password))
+        user = cursor.fetchone()
+        conn.close()
+
+        if user:
+            token = create_token(username)
+            response = redirect(url_for('protected'))
+            response.set_cookie('token', token, httponly=True)
+            flash('Login successful')
+            return response
+        else:
+            flash('Invalid username or password')
+            return render_template('login.html')
+    return render_template('login.html')
+
