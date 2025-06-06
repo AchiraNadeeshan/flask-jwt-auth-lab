@@ -21,3 +21,10 @@ def init_db():
     ''')
     conn.commit()
     conn.close()
+
+def create_token(username):
+    payload = {
+        'username': username,
+        'exp': datetime.utcnow() + timedelta(minutes=30)
+    }
+    return jwt.encode(payload, JWT_SECRET, algorithm='HS256')
