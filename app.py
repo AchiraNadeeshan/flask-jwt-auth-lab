@@ -50,3 +50,10 @@ def token_required(f):
 
         return f(*args, **kwargs)
     return decorated
+
+
+@app.route('/')
+def home():
+    return render_template('home.html')
+
+
