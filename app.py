@@ -28,3 +28,25 @@ def create_token(username):
         'exp': datetime.utcnow() + timedelta(minutes=30)
     }
     return jwt.encode(payload, JWT_SECRET, algorithm='HS256')
+
+def token_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        token = request.cookies.get('token')
+
+        if not token:
+            flash('Please log in to access this page')
+            return redirect(url_for('login'))
+
+        try:
+            data = jwt.decode(token, JWT_SECRET, algorithms=['HS256'])
+            request.username = data['username']
+        except jwt.ExpiredSignatureError:
+            flash('Session expired. Please log in again.')
+            return redirect(url_for('login'))
+        except jwt.InvalidTokenError:
+            flash('Invalid session. Please log in again.')
+            return redirect(url_for('login'))
+
+        return f(*args, **kwargs)
+    return decorated
