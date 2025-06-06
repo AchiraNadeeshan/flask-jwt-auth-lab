@@ -57,3 +57,30 @@ def home():
     return render_template('home.html')
 
 
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+
+        if not username or not password:
+            flash('Username and password are required')
+            return render_template('register.html')
+
+        hashed_password = hashlib.sha256(password.encode()).hexdigest()
+
+        try:
+            conn = sqlite3.connect('users.db')
+            cursor = conn.cursor()
+            cursor.execute('INSERT INTO users (username, password) VALUES (?, ?)', (username, hashed_password))
+            conn.commit()
+            flash('Registration successful! Please log in')
+            return redirect(url_for('login'))
+        except sqlite3.IntegrityError:
+            flash('Username already exists')
+            return render_template('register.html')
+        finally:
+            conn.close()
+    return render_template('register.html')
+
+
