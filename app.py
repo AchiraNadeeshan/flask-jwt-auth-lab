@@ -114,3 +114,8 @@ def login():
 @token_required
 def protected():
     return render_template('protected.html', username=request.username)
+
+
+if __name__ == '__main__':
+    init_db()
+    app.run(debug=True, port=3000)
