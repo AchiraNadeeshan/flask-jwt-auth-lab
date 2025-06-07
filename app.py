@@ -25,7 +25,7 @@ def init_db():
 def create_token(username):
     payload = {
         'username': username,
-        'exp': datetime.utcnow() + timedelta(minutes=1)
+        'exp': datetime.utcnow() + timedelta(minutes=30)
     }
     return jwt.encode(payload, JWT_SECRET, algorithm='HS256')
 
@@ -119,3 +119,4 @@ def protected():
 if __name__ == '__main__':
     init_db()
     app.run(debug=True, port=3000)
+    
